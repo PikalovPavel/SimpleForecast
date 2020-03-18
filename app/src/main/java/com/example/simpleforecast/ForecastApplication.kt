@@ -1,10 +1,13 @@
 package com.example.simpleforecast
 
 import android.app.Application
+import com.example.simpleforecast.Data.Local.Database.Dao.WeatherDao
+import com.example.simpleforecast.Data.Local.Database.DatabaseService
 import com.example.simpleforecast.Data.Remote.ForecastApi
 import com.example.simpleforecast.Data.Remote.RetrofitService
 import com.example.simpleforecast.Data.Repositories.WeatherRepository
-import com.example.simpleforecast.UI.MainViewModelFactory
+import com.example.simpleforecast.UI.Cities.CitiesViewModelFactory
+import com.example.simpleforecast.UI.Cities.WeatherViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -22,10 +25,26 @@ class ForecastApplication: Application(), KodeinAware {
         }
 
         bind<WeatherRepository>() with singleton {
-            WeatherRepository(instance())
+            WeatherRepository(instance(), instance())
         }
 
-        bind() from provider { MainViewModelFactory(instance())}
+        bind<DatabaseService>() with singleton {
+            DatabaseService.getInstance(applicationContext)
+        }
+        bind<WeatherDao>() with singleton {
+            instance<DatabaseService>().weatherDao()
+        }
+
+        bind() from provider {
+            WeatherViewModelFactory(
+                instance()
+            )
+        }
+        bind() from provider {
+            CitiesViewModelFactory(
+                instance()
+            )
+        }
 
     }
 }

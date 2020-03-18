@@ -1,9 +1,9 @@
-package com.example.simpleforecast.Data.Remote.Response
+package com.example.simpleforecast.Data.Remote.CityResponse
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Region(
+data class Country(
     @SerializedName("EnglishName")
     val englishName: String,
     @SerializedName("ID")

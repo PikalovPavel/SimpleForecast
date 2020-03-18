@@ -1,13 +1,13 @@
-package com.example.simpleforecast.Data.Remote.Response
+package com.example.simpleforecast.Data.Remote.CityResponse
 
 
 import com.google.gson.annotations.SerializedName
 
-data class SupplementalAdminArea(
+data class Region(
     @SerializedName("EnglishName")
     val englishName: String,
-    @SerializedName("Level")
-    val level: Int,
+    @SerializedName("ID")
+    val iD: String,
     @SerializedName("LocalizedName")
     val localizedName: String
 )

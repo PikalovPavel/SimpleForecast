@@ -1,9 +1,9 @@
-package com.example.simpleforecast.Data.Remote.Response
+package com.example.simpleforecast.Data.Remote.CityResponse
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Imperial(
+data class Metric(
     @SerializedName("Unit")
     val unit: String,
     @SerializedName("UnitType")
