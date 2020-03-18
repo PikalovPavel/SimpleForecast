@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/temperatureTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Температура"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/degreeCelsius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+17"
+        app:layout_constraintStart_toStartOf="@+id/temperatureTitle"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTitle" />
+
+    <TextView
+        android:id="@+id/degreeCelsiusFeel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+17"
+        app:layout_constraintBottom_toBottomOf="@+id/feelsLike"
+        app:layout_constraintStart_toEndOf="@+id/feelsLike"
+        app:layout_constraintTop_toTopOf="@+id/feelsLike" />
+
+    <TextView
+        android:id="@+id/weatherDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="+17"
+        app:layout_constraintStart_toEndOf="@+id/degreesign"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTitle" />
+
+    <TextView
+        android:id="@+id/degreesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text=","
+        app:layout_constraintStart_toEndOf="@+id/degreeCelsius"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTitle" />
+
+    <TextView
+        android:id="@+id/feelsLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="Очущается как"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/degreeCelsius"
+        app:layout_constraintTop_toBottomOf="@+id/degreeCelsius" />
+
+    <ImageView
+        android:id="@+id/weatherImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/degreeCelsiusFeel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/alert_light_frame" />
+
+    <TextView
+        android:id="@+id/cityId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/degreeCelsiusFeel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/feelsLike"
+        app:layout_constraintTop_toBottomOf="@+id/feelsLike"
+        app:layout_constraintVertical_bias="0.615" />
+</androidx.constraintlayout.widget.ConstraintLayout>
