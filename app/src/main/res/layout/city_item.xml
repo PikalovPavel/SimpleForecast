@@ -32,11 +32,29 @@
         android:id="@+id/area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="32dp"
         android:text="Красноярская область"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/cityName"
+        app:layout_constraintStart_toEndOf="@+id/areaType"
         app:layout_constraintTop_toBottomOf="@+id/cityName"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/areaType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/cityName"
+        app:layout_constraintTop_toBottomOf="@+id/cityName" />
+
+    <TextView
+        android:id="@+id/colon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        app:layout_constraintEnd_toStartOf="@+id/area"
+        app:layout_constraintStart_toEndOf="@+id/areaType"
+        app:layout_constraintTop_toBottomOf="@+id/cityName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

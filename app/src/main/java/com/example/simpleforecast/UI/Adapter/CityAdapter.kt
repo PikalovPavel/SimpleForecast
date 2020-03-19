@@ -6,31 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.simpleforecast.Data.Local.Util.CityTemperature
+import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.R
 import java.util.ArrayList
 
 
 class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
-    private val cityAdapter: MutableList<CityTemperature> = ArrayList()
+    private val cityList: MutableList<City> = ArrayList()
 
 
 
-    fun setData(news:List<CityTemperature>) {
-        cityAdapter.clear()
-        cityAdapter.addAll(news)
+    fun setData(news:List<City>) {
+        cityList.clear()
+        cityList.addAll(news)
         notifyDataSetChanged()
     }
 
-    fun addItem(cityTemperature: CityTemperature) {
-        cityAdapter.add(cityTemperature)
-        notifyItemInserted(cityAdapter.size - 1)
+    private var mCallback: BaseAdapterCallback? = null
+
+    fun attachCallback(callback: BaseAdapterCallback) {
+        this.mCallback = callback
     }
 
-    fun clear() {
-        cityAdapter.clear()
-        notifyDataSetChanged()
+    fun detachCallback() {
+        this.mCallback = null
     }
 
 
@@ -40,10 +40,13 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
             .inflate(R.layout.city_item, parent, false))
     }
 
-    override fun getItemCount(): Int =  cityAdapter.count()
+    override fun getItemCount(): Int =  cityList.count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(cityAdapter[position])
+        holder.bind(cityList[position])
+        holder.itemView.setOnClickListener {
+            mCallback?.onItemClick(cityList[position])
+        }
     }
 
 
@@ -53,8 +56,8 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
         private val cityArea: TextView = itemView.findViewById(R.id.area)
         private val cityTemperature: TextView = itemView.findViewById(R.id.cityTemperature)
 
-        fun bind(city: CityTemperature) {
-            cityName.text = city.cityName
+        fun bind(city: City) {
+            cityName.text = city.name
             cityArea.text = city.area
             cityTemperature.text = city.temperature
 //            Glide

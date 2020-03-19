@@ -24,24 +24,29 @@ class WeatherViewModel(val repository: WeatherRepository) : ViewModel() {
     val weather: LiveData<Weather>
         get() = _weatherResponse
 
-
-
-//    fun getCurrentWeather(){
-//        val cities = listOf("294021", "295212", "294922","291605", "349727")
-//        _responseState.postValue(Pair(ResponseState.LOADING, ""))
-//        val disposable = repository.getWeather(cities)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                _weatherResponse.postValue(it)
-//            }, {
-//                _weatherResponse.postValue(null)
-//                _responseState.postValue(Pair(ResponseState.ERROR,
-//                    it.message?:it.toString()))
-//                Log.d("test", it.message)
-//            }, {
-//                _responseState.postValue(Pair(ResponseState.SUCCESS, ""))
-//            })
-//        disposables.add(disposable)
-//    }
+    fun getCurrentWeather(cityId:String) {
+        _responseState.postValue(Pair(ResponseState.LOADING, ""))
+        val disposable = repository.getWeather(cityId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _weatherResponse.postValue(it)
+                _responseState.postValue(
+                    Pair(
+                        ResponseState.SUCCESS,
+                        ""
+                    )
+                )
+            }, {
+                _weatherResponse.postValue(null)
+                _responseState.postValue(
+                    Pair(
+                        ResponseState.ERROR,
+                        it.message ?: it.toString()
+                    )
+                )
+                Log.d("test", it.message)
+            })
+        disposables.add(disposable)
+    }
 }

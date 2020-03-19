@@ -29,7 +29,7 @@ object RetrofitService {
             var request: Request = chain.request()
             val url: HttpUrl = request.url()
                 .newBuilder()
-                .addQueryParameter("apikey", "aImwAWWbGaUcvJAGNKbIhCjfMbALXsZy")
+                .addQueryParameter("apikey", "eCnII7fEZHZlVY3eVGYWYIURh7YMDrxi")
                 .addQueryParameter("language", "ru-ru")
                 .build()
             request = request.newBuilder().url(url).build()

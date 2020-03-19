@@ -22,20 +22,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this, factory).get(WeatherViewModel::class.java)
-        val newsAdaper = CityAdapter()
 
-//        viewModel.weather.observe(this, Observer { item ->
-//            newsAdaper.addItem(item)
-//        })
-//
-//        viewModel.responseState.observe(this, Observer {
-//            when(it.first) {
-//                ResponseState.LOADING -> {newsAdaper.clear()}
-//                ResponseState.SUCCESS -> {}
-//                ResponseState.ERROR -> {}
-//            }
-//        })
-//        all_wheather.adapter = newsAdaper
-//        all_wheather.layoutManager = LinearLayoutManager(this)
+
     }
 }

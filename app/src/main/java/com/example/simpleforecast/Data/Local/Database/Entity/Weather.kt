@@ -8,7 +8,7 @@ import com.example.simpleforecast.Data.Local.Database.Entity.City
 
 
 @Entity(tableName = "weathers",
-    foreignKeys = [ForeignKey(
+        foreignKeys = [ForeignKey(
         entity = City::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("city_id"),
@@ -17,7 +17,7 @@ import com.example.simpleforecast.Data.Local.Database.Entity.City
 )
 data class Weather(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    val id:Int = 0,
     @ColumnInfo(name = "temperature")
     val temperature:String,
     @ColumnInfo(name = "temperature_description")
