@@ -2,7 +2,6 @@ package com.example.simpleforecast.Data.Remote.CityResponse
 
 
 import com.example.simpleforecast.Data.Local.Database.Entity.City
-import com.example.simpleforecast.Data.Local.Util.CityTemperature
 import com.google.gson.annotations.SerializedName
 
 data class CityResponse(
@@ -32,8 +31,9 @@ data class CityResponse(
     val type: String,
     @SerializedName("Version")
     val version: Int
-) {
-    fun mapToLocal(temperature: String) = City(
+)
+{
+    fun mapToLocal(temperature: Double) = City(
         id = key,
         name = localizedName,
         area = administrativeArea.localizedName,

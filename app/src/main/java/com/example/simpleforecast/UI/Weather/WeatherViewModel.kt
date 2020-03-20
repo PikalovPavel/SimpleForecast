@@ -3,6 +3,7 @@ package com.example.simpleforecast.UI.Cities
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
 import com.example.simpleforecast.Data.Repositories.WeatherRepository
@@ -11,10 +12,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherViewModel(val repository: WeatherRepository) : ViewModel() {
+class WeatherViewModel(val repository: WeatherRepository,
+                       state : SavedStateHandle) : ViewModel() {
+
     //disposable to dispose the Completable
     private val disposables = CompositeDisposable()
     private val _responseState = MutableLiveData<Pair<ResponseState, String>>()
+    private val savedStateHandle = state
 
     val responseState: LiveData<Pair<ResponseState, String>>
         get() = _responseState
@@ -23,6 +27,18 @@ class WeatherViewModel(val repository: WeatherRepository) : ViewModel() {
 
     val weather: LiveData<Weather>
         get() = _weatherResponse
+
+    companion object {
+        const val CITY_KEY = "cityId"
+    }
+
+    fun saveCityId(cityId: String) {
+        savedStateHandle.set(CITY_KEY, cityId)
+    }
+
+    fun getCityId(): String? {
+        return savedStateHandle.get(CITY_KEY)
+    }
 
     fun getCurrentWeather(cityId:String) {
         _responseState.postValue(Pair(ResponseState.LOADING, ""))

@@ -1,5 +1,6 @@
 package com.example.simpleforecast.UI.Cities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,7 +8,9 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.R
+import com.example.simpleforecast.UI.Adapter.BaseAdapterCallback
 import com.example.simpleforecast.UI.Adapter.CityAdapter
 import com.example.simpleforecast.Util.ResponseState
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,11 +27,11 @@ class CitiesActivity : AppCompatActivity(), KodeinAware  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this, factory).get(CitiesViewModel::class.java)
-        val newsAdaper = CityAdapter()
+        val cityAdapter = CityAdapter()
 
         viewModel.weather.observe(this, Observer { items ->
             if (items!=null)
-            newsAdaper.setData(items)
+            cityAdapter.setData(items)
         })
 
         viewModel.responseState.observe(this, Observer {
@@ -41,10 +44,20 @@ class CitiesActivity : AppCompatActivity(), KodeinAware  {
                 }
             }
         })
+
         search_button.setOnClickListener {
             viewModel.getCities(citySearch.text.toString())
         }
-        all_wheather.adapter = newsAdaper
+
+        cityAdapter.attachCallback(object : BaseAdapterCallback {
+            override fun onItemClick(model: City) {
+                val intent = Intent(applicationContext, WeatherActivity::class.java)
+                intent.putExtra("cityId", model.id)
+                startActivity(intent)
+            }
+
+        })
+        all_wheather.adapter = cityAdapter
         all_wheather.layoutManager = LinearLayoutManager(this)
     }
 }

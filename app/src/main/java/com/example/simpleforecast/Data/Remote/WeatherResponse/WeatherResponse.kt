@@ -15,12 +15,16 @@ data class WeatherResponse(
     val link: String,
     @SerializedName("LocalObservationDateTime")
     val localObservationDateTime: String,
-    @SerializedName("MobileLink")
-    val mobileLink: String,
     @SerializedName("PrecipitationType")
     val precipitationType: Any,
     @SerializedName("Temperature")
     val temperature: Temperature,
+    @SerializedName("RealFeelTemperature")
+    val realFeelTemperature: RealFeelTemperature,
+    @SerializedName("Wind")
+    val wind: Wind,
+    @SerializedName("Pressure")
+    val pressure: Pressure,
     @SerializedName("WeatherIcon")
     val weatherIcon: Int,
     @SerializedName("WeatherText")
@@ -29,6 +33,11 @@ data class WeatherResponse(
     fun mapToLocal(cityId:String) =  Weather(
         icon = weatherIcon,
         cityId = cityId,
-        temperature = temperature.metric.value.toString(),
-        temperatureDescription = weatherText)
+        temperature = temperature.metric.value,
+        temperatureDescription = weatherText,
+        temperatureFeels = realFeelTemperature.metric.value,
+        wind = wind.speed.metric.value,
+        windDirection = wind.direction.localized,
+        pressure = pressure.metric.value
+        )
 }

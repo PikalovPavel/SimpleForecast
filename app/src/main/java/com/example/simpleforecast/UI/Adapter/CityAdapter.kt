@@ -52,26 +52,22 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val cityName: TextView = itemView.findViewById(R.id.cityName)
-        private val cityArea: TextView = itemView.findViewById(R.id.area)
+        private val cityName: TextView = itemView.findViewById(R.id.temperature)
+        private val cityArea: TextView = itemView.findViewById(R.id.areaWeather)
+        private val cityAreaType: TextView = itemView.findViewById(R.id.areaType)
+        private val cityCountry: TextView = itemView.findViewById(R.id.country)
         private val cityTemperature: TextView = itemView.findViewById(R.id.cityTemperature)
 
         fun bind(city: City) {
             cityName.text = city.name
             cityArea.text = city.area
-            cityTemperature.text = city.temperature
-//            Glide
-//                .with(itemView.context)
-//                .load(getImage("s${city.icon}", itemView.context))
-//                .into(imageIcon)
+            cityTemperature.text = city.temperature.toString()
+            cityAreaType.text = city.areaType
+            cityCountry.text = city.country
 
         }
-//        fun getImage(imageName: String, context: Context): Int {
-//
-//            val id = context.resources.getIdentifier(imageName, "drawable", context.packageName)
-//            Log.d("kek", id.toString())
-//            return id
-//        }
+
+
     }
 
 

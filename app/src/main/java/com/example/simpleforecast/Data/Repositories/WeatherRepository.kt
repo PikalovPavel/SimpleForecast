@@ -1,9 +1,9 @@
 package com.example.simpleforecast.Data.Repositories
 
+import android.util.Log
 import com.example.simpleforecast.Data.Local.Database.Dao.WeatherDao
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
-import com.example.simpleforecast.Data.Local.Util.CityTemperature
 import com.example.simpleforecast.Data.Remote.CityResponse.CityResponse
 import com.example.simpleforecast.Data.Remote.ForecastApi
 import com.example.simpleforecast.Data.Remote.WeatherResponse.WeatherResponse
@@ -28,11 +28,14 @@ class WeatherRepository (private val remote: ForecastApi, private val local: Wea
                                 weatherResponse.first().mapToLocal(cityResponse.key)
                             }
                             .toObservable()
-                            .doOnNext { local.addWeatherInCity(
+                            .doOnNext {
+                                Log.d("test", it.toString())
+                                local.addWeatherInCity(
                                     cityResponse.mapToLocal(it.temperature), it)
                             }.map {cityResponse.mapToLocal(it.temperature)}
                     }.toList()
                  }.onErrorResumeNext{
+                     Log.d("test", it.localizedMessage?:it.toString())
                      local.getCities(city)
                  }
          }

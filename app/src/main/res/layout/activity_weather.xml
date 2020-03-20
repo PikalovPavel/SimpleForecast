@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cityName"
+        android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+17"
-        app:layout_constraintStart_toStartOf="@+id/cityName"
-        app:layout_constraintTop_toBottomOf="@+id/cityName" />
+        app:layout_constraintStart_toStartOf="@+id/temperature"
+        app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
     <TextView
         android:id="@+id/degreeCelsiusFeel"
@@ -39,7 +47,7 @@
         android:layout_marginStart="12dp"
         android:text="+17"
         app:layout_constraintStart_toEndOf="@+id/degreesign"
-        app:layout_constraintTop_toBottomOf="@+id/cityName" />
+        app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
     <TextView
         android:id="@+id/degreesign"
@@ -48,13 +56,13 @@
         android:layout_marginStart="12dp"
         android:text=","
         app:layout_constraintStart_toEndOf="@+id/degreeCelsius"
-        app:layout_constraintTop_toBottomOf="@+id/cityName" />
+        app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
     <TextView
         android:id="@+id/feelsLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="88dp"
         android:text="Очущается как"
         app:layout_constraintStart_toStartOf="@+id/degreeCelsius"
         app:layout_constraintTop_toBottomOf="@+id/degreeCelsius" />
@@ -70,9 +78,10 @@
         app:srcCompat="@android:drawable/alert_light_frame" />
 
     <TextView
-        android:id="@+id/cityId"
+        android:id="@+id/cityIdTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
         android:text="Название города"
         app:layout_constraintEnd_toEndOf="@+id/degreeCelsiusFeel"
         app:layout_constraintHorizontal_bias="0.0"
@@ -80,25 +89,46 @@
         app:layout_constraintTop_toBottomOf="@+id/feelsLike" />
 
     <TextView
-        android:id="@+id/area"
+        android:id="@+id/areaWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Название города"
+        android:layout_marginTop="60dp"
+        android:text="Название края"
         app:layout_constraintEnd_toEndOf="@+id/degreeCelsiusFeel"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/feelsLike"
-        app:layout_constraintTop_toBottomOf="@+id/cityId" />
+        app:layout_constraintTop_toBottomOf="@+id/cityIdTv" />
 
     <TextView
-        android:id="@+id/wind"
+        android:id="@+id/windPowerTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Название города"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="88dp"
+        android:text="ВетерСила"
         app:layout_constraintEnd_toEndOf="@+id/degreeCelsiusFeel"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/feelsLike"
-        app:layout_constraintTop_toBottomOf="@+id/area"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintTop_toBottomOf="@+id/areaWeather" />
+
+    <TextView
+        android:id="@+id/windDirectionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="C/В"
+        app:layout_constraintBottom_toBottomOf="@+id/windPowerTv"
+        app:layout_constraintStart_toEndOf="@+id/windPowerTv"
+        app:layout_constraintTop_toTopOf="@+id/windPowerTv" />
+
+    <TextView
+        android:id="@+id/preasureTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="45mm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/windDirectionTv"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="@+id/windPowerTv"
+        app:layout_constraintTop_toBottomOf="@+id/windDirectionTv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

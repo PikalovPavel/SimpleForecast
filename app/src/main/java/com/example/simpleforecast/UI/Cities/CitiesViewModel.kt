@@ -6,14 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
-import com.example.simpleforecast.Data.Local.Util.CityTemperature
 import com.example.simpleforecast.Data.Repositories.WeatherRepository
 import com.example.simpleforecast.Util.ResponseState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CitiesViewModel(val repository: WeatherRepository) : ViewModel() {
+class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
     //disposable to dispose the Completable
     private val disposables = CompositeDisposable()
     private val _responseState = MutableLiveData<Pair<ResponseState, String>>()

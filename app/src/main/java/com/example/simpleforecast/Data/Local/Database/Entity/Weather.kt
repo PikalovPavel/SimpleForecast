@@ -19,9 +19,17 @@ data class Weather(
     @PrimaryKey(autoGenerate = true)
     val id:Int = 0,
     @ColumnInfo(name = "temperature")
-    val temperature:String,
+    val temperature:Double,
+    @ColumnInfo(name = "temperature_feels")
+    val temperatureFeels:Double,
     @ColumnInfo(name = "temperature_description")
     val temperatureDescription:String,
+    @ColumnInfo(name = "wind")
+    val wind:Double,
+    @ColumnInfo(name = "wind_direction")
+    val windDirection:String,
+    @ColumnInfo(name = "pressure")
+    val pressure:Double,
     @ColumnInfo(name = "icon")
     val icon:Int,
     @ColumnInfo(name = "city_id")

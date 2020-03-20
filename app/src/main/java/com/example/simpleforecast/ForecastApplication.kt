@@ -1,6 +1,7 @@
 package com.example.simpleforecast
 
 import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import com.example.simpleforecast.Data.Local.Database.Dao.WeatherDao
 import com.example.simpleforecast.Data.Local.Database.DatabaseService
 import com.example.simpleforecast.Data.Remote.ForecastApi
@@ -28,18 +29,23 @@ class ForecastApplication: Application(), KodeinAware {
             WeatherRepository(instance(), instance())
         }
 
+        bind() from provider {
+            WeatherViewModelFactory(
+                instance(), SavedStateHandle()
+            )
+        }
+
         bind<DatabaseService>() with singleton {
             DatabaseService.getInstance(applicationContext)
         }
+
+
+
         bind<WeatherDao>() with singleton {
             instance<DatabaseService>().weatherDao()
         }
 
-        bind() from provider {
-            WeatherViewModelFactory(
-                instance()
-            )
-        }
+
         bind() from provider {
             CitiesViewModelFactory(
                 instance()
