@@ -36,14 +36,13 @@ class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     fun getCities(city:String){
         _responseState.postValue(Pair(ResponseState.LOADING, ""))
-        val disposable = repository.getCites(city.toLowerCase(Locale.ROOT))
+        val disposable = repository.getCites(city)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _responseState.postValue(Pair(ResponseState.SUCCESS,
-                    it.size.toString()))
+                    it.isEmpty().toString()))
                 _weatherResponse.postValue(it)
-                Log.d("kek", it.toString())
             }, {
                 _responseState.postValue(Pair(ResponseState.ERROR,
                     it.message?:it.toString()))

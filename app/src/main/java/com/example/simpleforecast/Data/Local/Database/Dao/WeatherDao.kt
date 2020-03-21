@@ -9,8 +9,11 @@ import io.reactivex.Single
 @Dao
 interface WeatherDao {
 
-    @Query("SELECT * FROM cities WHERE name=:city")
+    @Query("SELECT * FROM cities WHERE name LIKE :city")
     fun getCities(city:String): Single<List<City>>
+
+    @Query("SELECT * FROM cities")
+    fun getAllCities(): Single<List<City>>
 
     @Query("SELECT * FROM weathers WHERE city_id=:cityId")
     fun getWeather(cityId:String): Single<Weather>

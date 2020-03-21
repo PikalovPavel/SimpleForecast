@@ -49,7 +49,7 @@ class WeatherViewModel(val repository: WeatherRepository,
         val localCityId = cityId ?: getCityId()
         if (localCityId!=null) {
             val localCity = _weatherResponse.value?.city
-                ?:City(localCityId, "","","",0.0,"")
+                ?:City(localCityId, "","","", country = "")
             val disposable = repository.updateWeather(localCityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

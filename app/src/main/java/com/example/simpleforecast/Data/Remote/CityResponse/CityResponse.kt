@@ -3,6 +3,7 @@ package com.example.simpleforecast.Data.Remote.CityResponse
 
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class CityResponse(
     @SerializedName("AdministrativeArea")
@@ -20,6 +21,6 @@ data class CityResponse(
         name = localizedName,
         area = administrativeArea.localizedName,
         areaType = administrativeArea.localizedType,
-        temperature = temperature,
+        temperature = temperature?.toInt(),
         country = country.localizedName)
 }

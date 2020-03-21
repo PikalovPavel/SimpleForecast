@@ -7,6 +7,7 @@ fun temperatureConverter(temperature: Double):String {
     return if (temperature>0) "+$temperature"
     else temperature.toString()
 }
+
 fun kmToMsConverter(speed:Double):Int {
     return (speed*0.277778).roundToInt()
 }

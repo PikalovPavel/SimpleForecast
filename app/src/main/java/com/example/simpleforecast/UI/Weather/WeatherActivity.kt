@@ -51,15 +51,12 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
         viewModel.responseState.observe(this, Observer {
             when (it.first) {
                 ResponseState.LOADING -> {
-                    swipeRefresh.isRefreshing = true
                     hideError()
                 }
                 ResponseState.SUCCESS -> {
                     swipeRefresh.isRefreshing = false
-
                 }
                 ResponseState.ERROR -> {
-                    swipeRefresh.isRefreshing = false
                     showError("При загрузке погоды произошла ошибка, попробуйте позже.")
                     Toast.makeText(this, it.second, Toast.LENGTH_LONG).show()
                 }
@@ -83,7 +80,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
         weatherDescription.text = cityWeather.weather.temperatureDescription
         cityIdTv.text = cityWeather.city.name
-        areaWeather.text = "${cityWeather.city.areaType}:${cityWeather.city.area}"
+        areaWeather.text = "${cityWeather.city.areaType}: ${cityWeather.city.area}"
 
         windPowerTv.text = if (cityWeather.weather.wind!=null) "${cityWeather.weather.wind} м/c" else ""
 
@@ -101,12 +98,14 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
 
     private fun showError(text:String) {
+        swipeRefresh.isRefreshing = false
         error_image.visibility = View.VISIBLE
         error_sign.visibility = View.VISIBLE
         error_sign.text = text
     }
 
     private fun hideError() {
+        swipeRefresh.isRefreshing = true
         error_image.visibility = View.GONE
         error_sign.visibility = View.GONE
         error_sign.text = ""

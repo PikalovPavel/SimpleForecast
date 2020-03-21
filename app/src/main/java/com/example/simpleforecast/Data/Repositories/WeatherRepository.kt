@@ -9,13 +9,14 @@ import com.example.simpleforecast.Data.Remote.ForecastApi
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+private const val REMOTE = "REMOTE_ERROR"
 
 class WeatherRepository (private val remote: ForecastApi, private val local: WeatherDao) {
 
 
-    private val REMOTE = "REMOTE_ERROR"
 
     fun getCites(city: String):Single<List<City>> {
+        Log.d(REMOTE+0, city)
              return remote.getCities(city)
                 .subscribeOn(Schedulers.newThread())
                  .flatMap { list ->
@@ -26,13 +27,13 @@ class WeatherRepository (private val remote: ForecastApi, private val local: Wea
                             }
                             .toObservable()
                             .doOnNext {
-                                Log.d("test", it.toString())
+                                Log.d(REMOTE+1, it.toString())
                                 local.addWeatherInCity(
                                     cityResponse.mapToLocal(it.temperature), it)
                             }.map {cityResponse.mapToLocal(it.temperature)}
                     }.toList()
                  }.onErrorResumeNext{
-                     Log.d("test", it.localizedMessage?:it.toString())
+                     Log.d(REMOTE+2, it.localizedMessage?:it.toString())
                      local.getCities(city)
                  }
          }

@@ -31,16 +31,24 @@ class CitiesActivity : AppCompatActivity(), KodeinAware  {
         val cityAdapter = CityAdapter()
 
         viewModel.weather.observe(this, Observer { items ->
-            if (items!=null)
+            if (!items.isNullOrEmpty())
             cityAdapter.setData(items)
         })
 
         viewModel.responseState.observe(this, Observer {
             when(it.first) {
-                ResponseState.LOADING -> {progressBar.visibility = View.VISIBLE}
-                ResponseState.SUCCESS -> {progressBar.visibility = View.GONE}
-                ResponseState.ERROR -> {
+                ResponseState.LOADING -> {
+                    hideError()
+                }
+                ResponseState.SUCCESS -> {
                     progressBar.visibility = View.GONE
+                    if (it.second=="true") {
+                        cityAdapter.clearData()
+                        showError("На данный момент нет результатов по городу: ${citySearch.text}. Попробуйте позже.")
+                    }
+                }
+                ResponseState.ERROR -> {
+                    if (!cityAdapter.hasItems) showError("Произошла ошибка. Попробуйте позже.")
                     Toast.makeText(this, it.second, Toast.LENGTH_LONG).show()
                 }
             }
@@ -62,5 +70,20 @@ class CitiesActivity : AppCompatActivity(), KodeinAware  {
         })
         all_wheather.adapter = cityAdapter
         all_wheather.layoutManager = LinearLayoutManager(this)
+
+    }
+
+    private fun showError(text:String) {
+        progressBar.visibility = View.GONE
+        error_image_main.visibility = View.VISIBLE
+        error_sign_main.visibility = View.VISIBLE
+        error_sign_main.text = text
+    }
+
+    private fun hideError() {
+        progressBar.visibility = View.VISIBLE
+        error_image_main.visibility = View.GONE
+        error_sign_main.visibility = View.GONE
+        error_sign_main.text = ""
     }
 }

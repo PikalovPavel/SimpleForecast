@@ -8,18 +8,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.R
-import java.util.ArrayList
+import java.util.*
 
 
 class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
-    private val cityList: MutableList<City> = ArrayList()
-
+    private val cityList: MutableList<City> = mutableListOf()
+    var hasItems = false
 
 
     fun setData(news:List<City>) {
         cityList.clear()
         cityList.addAll(news)
+        hasItems = true
+        notifyDataSetChanged()
+    }
+
+    fun clearData() {
+        cityList.clear()
+        hasItems = false
         notifyDataSetChanged()
     }
 
@@ -56,6 +63,7 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
         private val cityArea: TextView = itemView.findViewById(R.id.areaWeather)
         private val cityCountry: TextView = itemView.findViewById(R.id.country)
         private val cityTemperature: TextView = itemView.findViewById(R.id.cityTemperature)
+
 
         fun bind(city: City) {
             cityName.text = city.name
