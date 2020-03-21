@@ -83,7 +83,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
         weatherDescription.text = cityWeather.weather.temperatureDescription
         cityIdTv.text = cityWeather.city.name
-        areaWeather.text = cityWeather.city.area
+        areaWeather.text = "${cityWeather.city.areaType}:${cityWeather.city.area}"
 
         windPowerTv.text = if (cityWeather.weather.wind!=null) "${cityWeather.weather.wind} м/c" else ""
 

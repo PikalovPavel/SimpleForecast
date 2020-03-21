@@ -3,6 +3,7 @@ package com.example.simpleforecast.UI.Cities
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
@@ -18,6 +19,7 @@ class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _responseState = MutableLiveData<Pair<ResponseState, String>>()
 
+
     val responseState: LiveData<Pair<ResponseState, String>>
         get() = _responseState
 
@@ -25,6 +27,10 @@ class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     val weather: LiveData<List<City>>
         get() = _weatherResponse
+
+
+
+
 
 
 

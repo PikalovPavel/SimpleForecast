@@ -52,17 +52,15 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val cityName: TextView = itemView.findViewById(R.id.temperature)
+        private val cityName: TextView = itemView.findViewById(R.id.city_name_item)
         private val cityArea: TextView = itemView.findViewById(R.id.areaWeather)
-        private val cityAreaType: TextView = itemView.findViewById(R.id.areaType)
         private val cityCountry: TextView = itemView.findViewById(R.id.country)
         private val cityTemperature: TextView = itemView.findViewById(R.id.cityTemperature)
 
         fun bind(city: City) {
             cityName.text = city.name
-            cityArea.text = city.area
+            cityArea.text = "${city.areaType}: ${city.area}"
             cityTemperature.text = city.temperature.toString()
-            cityAreaType.text = city.areaType
             cityCountry.text = city.country
 
         }

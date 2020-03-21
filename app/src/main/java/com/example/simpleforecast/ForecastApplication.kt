@@ -35,6 +35,12 @@ class ForecastApplication: Application(), KodeinAware {
             )
         }
 
+        bind() from provider {
+            CitiesViewModelFactory(
+                instance()
+            )
+        }
+
         bind<DatabaseService>() with singleton {
             DatabaseService.getInstance(applicationContext)
         }
@@ -46,11 +52,7 @@ class ForecastApplication: Application(), KodeinAware {
         }
 
 
-        bind() from provider {
-            CitiesViewModelFactory(
-                instance()
-            )
-        }
+
 
     }
 }
