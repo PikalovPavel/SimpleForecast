@@ -16,8 +16,8 @@ data class City(
     val area:String,
     @ColumnInfo(name = "areaType")
     val areaType:String,
-    @ColumnInfo(name = "temperature")
-    val temperature: Double,
+    @ColumnInfo(name = "city_temperature")
+    val temperature: Double?=null,
     @ColumnInfo(name = "country")
     val country:String
   )

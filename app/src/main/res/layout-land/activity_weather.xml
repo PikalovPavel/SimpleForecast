@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:id="@+id/error_sign"
             android:layout_width="0dp"
@@ -37,12 +38,14 @@
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
 
         <View
             android:id="@+id/view"
-            android:layout_width="650dp"
+            android:layout_width="1000dp"
             android:layout_height="0dp"
             android:background="@drawable/weather_eclipse_header"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -55,12 +58,12 @@
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
             android:text="℃"
             android:textColor="@android:color/white"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@+id/degreeCelsius"
-            app:layout_constraintStart_toEndOf="@+id/degreeCelsius"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/degreeCelsius"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -68,26 +71,24 @@
             android:id="@+id/degreeCelsius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="44dp"
             android:text="+17"
             android:textColor="@android:color/white"
             android:textSize="52sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/temperature"
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <TextView
             android:id="@+id/degreeCelsiusFeel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
             android:text="+17"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/feelsLike"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/feelsLike"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/feelsLike"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -95,24 +96,25 @@
             android:id="@+id/weatherDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
             android:text="Облачно, с прояснениями"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/weatherImage"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/degreeCelsius"
-            app:layout_constraintTop_toBottomOf="@+id/degreeCelsius" />
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/feelsLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="16dp"
             android:text="Очущается как"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
@@ -120,11 +122,14 @@
             android:id="@+id/weatherImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/degreeCelsius"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/degreeCelsius"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/degreeCelsius"
-            app:layout_constraintVertical_bias="0.393"
+            app:layout_constraintVertical_bias="0.31"
             app:srcCompat="@drawable/s1" />
 
         <TextView
@@ -132,9 +137,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
             android:text="Санкт-Петербург название длинного города"
             android:textColor="@android:color/white"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/weatherDescription"
@@ -158,14 +164,12 @@
             android:id="@+id/windPowerTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"
             android:text="ВетерСила"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/windPowerTitle"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/degreeCelsiusFeel"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/windPowerTitle"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/windPowerTitle" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -179,29 +183,24 @@
             android:id="@+id/windDirectionTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"
             android:text="C/В"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/windDirectionTitle"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/windPowerTv"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/windDirectionTitle"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/windDirectionTitle" />
 
         <TextView
             android:id="@+id/preasureTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
             android:text="45mm"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/preasureTitle"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/windDirectionTv"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/preasureTitle"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/preasureTitle"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -209,36 +208,40 @@
             android:id="@+id/windDirectionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="Направление"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/windPowerTitle"
             app:layout_constraintTop_toBottomOf="@+id/windPowerTitle" />
 
         <TextView
             android:id="@+id/windPowerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="Ветер"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/feelsLike"
             app:layout_constraintTop_toBottomOf="@+id/feelsLike" />
 
         <TextView
             android:id="@+id/preasureTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="Давление"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/windDirectionTitle"
             app:layout_constraintTop_toBottomOf="@+id/windDirectionTitle"
-            app:layout_constraintVertical_bias="0.011" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/backButton"

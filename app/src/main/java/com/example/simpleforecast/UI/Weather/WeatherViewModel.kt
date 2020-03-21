@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.simpleforecast.Data.Local.Database.Entity.City
+import com.example.simpleforecast.Data.Local.Database.Entity.CityWeather
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
 import com.example.simpleforecast.Data.Repositories.WeatherRepository
 import com.example.simpleforecast.Util.ResponseState
@@ -23,9 +25,9 @@ class WeatherViewModel(val repository: WeatherRepository,
     val responseState: LiveData<Pair<ResponseState, String>>
         get() = _responseState
 
-    private val _weatherResponse = MutableLiveData<Weather>()
+    private val _weatherResponse = MutableLiveData<CityWeather>()
 
-    val weather: LiveData<Weather>
+    val weather: LiveData<CityWeather>
         get() = _weatherResponse
 
     companion object {
@@ -40,9 +42,49 @@ class WeatherViewModel(val repository: WeatherRepository,
         return savedStateHandle.get(CITY_KEY)
     }
 
+
+    fun updateWeather(cityId: String?) {
+        _responseState.postValue(Pair(ResponseState.LOADING, ""))
+        Log.d("kek", cityId)
+        val localCityId = cityId ?: getCityId()
+        if (localCityId!=null) {
+            val localCity = _weatherResponse.value?.city
+                ?:City(localCityId, "","","",0.0,"")
+            val disposable = repository.updateWeather(localCityId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _weatherResponse.postValue(CityWeather(localCity, it))
+                    _responseState.postValue(
+                        Pair(
+                            ResponseState.SUCCESS,
+                            ""
+                        )
+                    )
+                }, {
+                    _weatherResponse.postValue(null)
+                    _responseState.postValue(
+                        Pair(
+                            ResponseState.ERROR,
+                            it.message ?: it.toString()
+                        )
+                    )
+                    Log.d("test", it.message)
+                })
+            disposables.add(disposable)
+        } else {
+            _responseState.postValue(
+                Pair(
+                    ResponseState.ERROR,
+                   "Вернитесь к выбору города и попробуйте позже"
+                )
+            )
+        }
+    }
+
     fun getCurrentWeather(cityId:String) {
         _responseState.postValue(Pair(ResponseState.LOADING, ""))
-        val disposable = repository.getWeather(cityId)
+        val disposable = repository.getCityWeather(cityId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

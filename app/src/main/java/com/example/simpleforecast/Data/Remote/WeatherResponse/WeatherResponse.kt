@@ -2,6 +2,9 @@ package com.example.simpleforecast.Data.Remote.WeatherResponse
 
 
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
+import com.example.simpleforecast.Util.barConverter
+import com.example.simpleforecast.Util.directionConverter
+import com.example.simpleforecast.Util.kmToMsConverter
 import com.google.gson.annotations.SerializedName
 
 data class WeatherResponse(
@@ -36,8 +39,8 @@ data class WeatherResponse(
         temperature = temperature.metric.value,
         temperatureDescription = weatherText,
         temperatureFeels = realFeelTemperature.metric.value,
-        wind = wind.speed.metric.value,
-        windDirection = wind.direction.localized,
-        pressure = pressure.metric.value
+        wind = if (wind.speed.metric.value==null) wind.speed.metric.value else kmToMsConverter(wind.speed.metric.value),
+        windDirection = directionConverter(wind.direction.localized),
+        pressure = if (pressure.metric.value==null) pressure.metric.value else barConverter(pressure.metric.value)
         )
 }

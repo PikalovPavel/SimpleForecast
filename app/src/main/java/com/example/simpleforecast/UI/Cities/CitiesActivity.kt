@@ -14,6 +14,7 @@ import com.example.simpleforecast.UI.Adapter.BaseAdapterCallback
 import com.example.simpleforecast.UI.Adapter.CityAdapter
 import com.example.simpleforecast.Util.ResponseState
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_weather.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -48,6 +49,8 @@ class CitiesActivity : AppCompatActivity(), KodeinAware  {
         search_button.setOnClickListener {
             viewModel.getCities(citySearch.text.toString())
         }
+
+
 
         cityAdapter.attachCallback(object : BaseAdapterCallback {
             override fun onItemClick(model: City) {

@@ -9,5 +9,5 @@ data class Metric(
     @SerializedName("UnitType")
     val unitType: Int,
     @SerializedName("Value")
-    val value: Double
+    val value: Double?=null
 )

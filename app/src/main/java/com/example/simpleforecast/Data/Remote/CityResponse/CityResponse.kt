@@ -9,31 +9,13 @@ data class CityResponse(
     val administrativeArea: AdministrativeArea,
     @SerializedName("Country")
     val country: Country,
-    @SerializedName("DataSets")
-    val dataSets: List<String>,
-    @SerializedName("EnglishName")
-    val englishName: String,
-    @SerializedName("GeoPosition")
-    val geoPosition: GeoPosition,
-    @SerializedName("IsAlias")
-    val isAlias: Boolean,
     @SerializedName("Key")
     val key: String,
     @SerializedName("LocalizedName")
-    val localizedName: String,
-    @SerializedName("PrimaryPostalCode")
-    val primaryPostalCode: String,
-    @SerializedName("SupplementalAdminAreas")
-    val supplementalAdminAreas: List<SupplementalAdminArea>,
-    @SerializedName("TimeZone")
-    val timeZone: TimeZone,
-    @SerializedName("Type")
-    val type: String,
-    @SerializedName("Version")
-    val version: Int
+    val localizedName: String
 )
 {
-    fun mapToLocal(temperature: Double) = City(
+    fun mapToLocal(temperature: Double?) = City(
         id = key,
         name = localizedName,
         area = administrativeArea.localizedName,

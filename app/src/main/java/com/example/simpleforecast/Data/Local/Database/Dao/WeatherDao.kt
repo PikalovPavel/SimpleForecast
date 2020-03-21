@@ -2,6 +2,7 @@ package com.example.simpleforecast.Data.Local.Database.Dao
 
 import androidx.room.*
 import com.example.simpleforecast.Data.Local.Database.Entity.City
+import com.example.simpleforecast.Data.Local.Database.Entity.CityWeather
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
 import io.reactivex.Single
 
@@ -20,6 +21,9 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addWeather(weather:Weather)
 
+
+    @Query("SELECT weathers.*, cities.* FROM weathers INNER JOIN cities ON weathers.city_id = cities.id WHERE weathers.city_id = :cityId")
+    fun getCityWeather(cityId: String):Single<CityWeather>
 
     @Transaction
     fun addWeatherInCity(city:City, weather:Weather) {

@@ -11,5 +11,6 @@ interface ForecastApi {
     @GET("locations/v1/cities/search")
     fun getCities(@Query("q") city:String): Single<List<CityResponse>>
     @GET("currentconditions/v1/{id}")
-    fun getWeather(@Path("id") locationId:String, @Query("details") city:String): Single<List<WeatherResponse>>
+    fun getWeather(@Path("id") locationId:String,
+                   @Query("details") details:String): Single<List<WeatherResponse>>
 }

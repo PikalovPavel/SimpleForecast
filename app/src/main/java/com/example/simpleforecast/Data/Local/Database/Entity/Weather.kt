@@ -17,19 +17,19 @@ import com.example.simpleforecast.Data.Local.Database.Entity.City
 )
 data class Weather(
     @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
+    val weather_id:Int = 0,
     @ColumnInfo(name = "temperature")
-    val temperature:Double,
+    val temperature:Double? = null,
     @ColumnInfo(name = "temperature_feels")
-    val temperatureFeels:Double,
+    val temperatureFeels:Double?=null,
     @ColumnInfo(name = "temperature_description")
     val temperatureDescription:String,
     @ColumnInfo(name = "wind")
-    val wind:Double,
+    val wind:Int?=null,
     @ColumnInfo(name = "wind_direction")
     val windDirection:String,
     @ColumnInfo(name = "pressure")
-    val pressure:Double,
+    val pressure:Int?=null,
     @ColumnInfo(name = "icon")
     val icon:Int,
     @ColumnInfo(name = "city_id")

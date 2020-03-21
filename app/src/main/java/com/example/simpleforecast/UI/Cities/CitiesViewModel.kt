@@ -11,6 +11,7 @@ import com.example.simpleforecast.Util.ResponseState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
     //disposable to dispose the Completable
@@ -29,7 +30,7 @@ class CitiesViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     fun getCities(city:String){
         _responseState.postValue(Pair(ResponseState.LOADING, ""))
-        val disposable = repository.getCites(city)
+        val disposable = repository.getCites(city.toLowerCase(Locale.ROOT))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

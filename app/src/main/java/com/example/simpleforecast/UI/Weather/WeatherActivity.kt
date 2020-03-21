@@ -6,15 +6,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.simpleforecast.Data.Local.Database.Entity.Weather
+import com.example.simpleforecast.Data.Local.Database.Entity.CityWeather
 import com.example.simpleforecast.R
-import com.example.simpleforecast.UI.Adapter.CityAdapter
 import com.example.simpleforecast.Util.ResponseState
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.simpleforecast.Util.kmToMsConverter
+import com.example.simpleforecast.Util.temperatureConverter
 import kotlinx.android.synthetic.main.activity_weather.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -38,7 +36,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
             viewModel.saveCityId(cityId!!)
             viewModel.getCurrentWeather(cityId!!)
         } else {
-            showError()
+            showError("При загрузке погоды произошла ошибка, попробуйте позже.")
         }
 
 
@@ -46,40 +44,72 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
             attachOnUi(item)
         })
 
+        swipeRefresh.setOnRefreshListener {
+            viewModel.updateWeather(cityId)
+        }
+
         viewModel.responseState.observe(this, Observer {
             when (it.first) {
                 ResponseState.LOADING -> {
-                    progressBar2.visibility = View.VISIBLE
+                    swipeRefresh.isRefreshing = true
+                    hideError()
                 }
                 ResponseState.SUCCESS -> {
-                    progressBar2.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
+
                 }
                 ResponseState.ERROR -> {
-                    progressBar2.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
+                    showError("При загрузке погоды произошла ошибка, попробуйте позже.")
                     Toast.makeText(this, it.second, Toast.LENGTH_LONG).show()
                 }
             }
         })
 
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 
-    private fun attachOnUi(weather: Weather) {
-        degreeCelsius.text = weather.temperature.toString()?:""
-        degreeCelsiusFeel.text = weather.temperatureFeels.toString()
-        weatherDescription.text = weather.temperatureDescription
-        cityIdTv.text = "СПБ, славяне"
-        areaWeather.text = "СПБ край славянский"
-        windPowerTv.text = weather.wind.toString()
-        windDirectionTv.text = weather.windDirection
-        preasureTv.text = weather.pressure.toString()
+
+
+    private fun attachOnUi(cityWeather: CityWeather) {
+        degreeCelsius.text = if (cityWeather.weather.temperature==null) ""
+        else temperatureConverter(cityWeather.weather.temperature)
+
+        degreeCelsiusFeel.text = if (cityWeather.weather.temperatureFeels==null) ""
+        else temperatureConverter(cityWeather.weather.temperatureFeels)
+
+        weatherDescription.text = cityWeather.weather.temperatureDescription
+        cityIdTv.text = cityWeather.city.name
+        areaWeather.text = cityWeather.city.area
+
+        windPowerTv.text = if (cityWeather.weather.wind!=null) "${cityWeather.weather.wind} м/c" else ""
+
+        windDirectionTv.text = cityWeather.weather.windDirection
+
+        preasureTv.text = if (cityWeather.weather.pressure==null) ""
+        else "${cityWeather.weather.pressure} мм рт. ст."
+
+
         Glide
             .with(this)
-            .load(getImage("s${weather.icon}"))
+            .load(getImage("s${cityWeather.weather.icon}"))
             .into(weatherImage)
     }
 
-    private fun showError() {
-        Log.d("kek", cityId.toString())
+
+    private fun showError(text:String) {
+        error_image.visibility = View.VISIBLE
+        error_sign.visibility = View.VISIBLE
+        error_sign.text = text
+    }
+
+    private fun hideError() {
+        error_image.visibility = View.GONE
+        error_sign.visibility = View.GONE
+        error_sign.text = ""
     }
 
     private fun getImage(imageName: String): Int {
@@ -87,4 +117,6 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
         Log.d("kek", id.toString())
         return id
     }
+
+
 }

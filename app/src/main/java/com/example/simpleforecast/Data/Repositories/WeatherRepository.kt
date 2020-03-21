@@ -3,15 +3,12 @@ package com.example.simpleforecast.Data.Repositories
 import android.util.Log
 import com.example.simpleforecast.Data.Local.Database.Dao.WeatherDao
 import com.example.simpleforecast.Data.Local.Database.Entity.City
+import com.example.simpleforecast.Data.Local.Database.Entity.CityWeather
 import com.example.simpleforecast.Data.Local.Database.Entity.Weather
-import com.example.simpleforecast.Data.Remote.CityResponse.CityResponse
 import com.example.simpleforecast.Data.Remote.ForecastApi
-import com.example.simpleforecast.Data.Remote.WeatherResponse.WeatherResponse
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.intellij.lang.annotations.Flow
 
 class WeatherRepository (private val remote: ForecastApi, private val local: WeatherDao) {
 
@@ -40,8 +37,17 @@ class WeatherRepository (private val remote: ForecastApi, private val local: Wea
                  }
          }
 
-    fun getWeather(cityId: String): Single<Weather> {
-        return local.getWeather(cityId)
+    fun getCityWeather(cityId: String): Single<CityWeather> {
+        return local.getCityWeather(cityId)
+    }
+
+    fun updateWeather(cityId: String):Single<Weather> {
+        return remote.getWeather(cityId, "true")
+            .map {
+                it.first().mapToLocal(cityId)
+            }
+            .doOnSuccess { local.addWeather(it) }
+            .onErrorResumeNext {local.getWeather(cityId)}
     }
 
 }
