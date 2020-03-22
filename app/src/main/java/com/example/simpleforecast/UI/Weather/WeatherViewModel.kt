@@ -14,8 +14,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherViewModel(val repository: WeatherRepository,
-                       state : SavedStateHandle) : ViewModel() {
+
+class WeatherViewModel(
+    private val repository: WeatherRepository,
+    state: SavedStateHandle
+) : ViewModel() {
 
     //disposable to dispose the Completable
     private val disposables = CompositeDisposable()
@@ -32,6 +35,8 @@ class WeatherViewModel(val repository: WeatherRepository,
 
     companion object {
         const val CITY_KEY = "cityId"
+        const val TAG = "WeatherViewModel"
+
     }
 
     fun saveCityId(cityId: String) {
@@ -45,11 +50,10 @@ class WeatherViewModel(val repository: WeatherRepository,
 
     fun updateWeather(cityId: String?) {
         _responseState.postValue(Pair(ResponseState.LOADING, ""))
-        Log.d("kek", cityId)
         val localCityId = cityId ?: getCityId()
-        if (localCityId!=null) {
+        if (localCityId != null) {
             val localCity = _weatherResponse.value?.city
-                ?:City(localCityId, "","","", country = "")
+                ?: City(localCityId, "", "", "", country = "")
             val disposable = repository.updateWeather(localCityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,20 +73,20 @@ class WeatherViewModel(val repository: WeatherRepository,
                             it.message ?: it.toString()
                         )
                     )
-                    Log.d("test", it.message)
+                    Log.d(TAG, it.message ?: it.toString())
                 })
             disposables.add(disposable)
         } else {
             _responseState.postValue(
                 Pair(
                     ResponseState.ERROR,
-                   "Вернитесь к выбору города и попробуйте позже"
+                    "Вернитесь к выбору города и попробуйте позже"
                 )
             )
         }
     }
 
-    fun getCurrentWeather(cityId:String) {
+    fun getCurrentWeather(cityId: String) {
         _responseState.postValue(Pair(ResponseState.LOADING, ""))
         val disposable = repository.getCityWeather(cityId)
             .subscribeOn(Schedulers.io())
@@ -103,8 +107,13 @@ class WeatherViewModel(val repository: WeatherRepository,
                         it.message ?: it.toString()
                     )
                 )
-                Log.d("test", it.message)
+                Log.d(TAG, it.message ?: it.toString())
             })
         disposables.add(disposable)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
     }
 }

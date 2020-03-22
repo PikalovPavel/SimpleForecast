@@ -17,7 +17,7 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
     var hasItems = false
 
 
-    fun setData(news:List<City>) {
+    fun setData(news: List<City>) {
         cityList.clear()
         cityList.addAll(news)
         hasItems = true
@@ -36,18 +36,14 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
         this.mCallback = callback
     }
 
-    fun detachCallback() {
-        this.mCallback = null
-    }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.city_item, parent, false))
+        return ViewHolder(
+            itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.city_item, parent, false)
+        )
     }
 
-    override fun getItemCount(): Int =  cityList.count()
+    override fun getItemCount(): Int = cityList.count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(cityList[position])
@@ -57,8 +53,7 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
     }
 
 
-
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val cityName: TextView = itemView.findViewById(R.id.city_name_item)
         private val cityArea: TextView = itemView.findViewById(R.id.areaWeather)
         private val cityCountry: TextView = itemView.findViewById(R.id.country)

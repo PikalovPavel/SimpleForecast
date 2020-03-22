@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SimpleForecast</string>
+    <string name="celsius_sign">℃</string>
+    <string name="enter_city">Введите город</string>
+    <string name="search_button">Кнопка поиска</string>
+    <string name="image_error">Ошибка загрузки</string>
+    <string name="feels_like">Очущается как</string>
+    <string name="direction">Направление</string>
+    <string name="wind">Ветер</string>
+    <string name="pressure">Давление</string>
+    <string name="back_button">Кнопка возвращения назад</string>
+    <string name="weather_icon">Иконка погоды</string>
 </resources>

@@ -112,9 +112,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun getImage(imageName: String): Int {
-        val id = this.resources.getIdentifier(imageName, "drawable", this.packageName)
-        Log.d("kek", id.toString())
-        return id
+        return this.resources.getIdentifier(imageName, "drawable", this.packageName)
     }
 
 

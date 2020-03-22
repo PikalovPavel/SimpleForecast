@@ -9,46 +9,51 @@ import com.example.simpleforecast.Data.Remote.ForecastApi
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-private const val REMOTE = "REMOTE_ERROR"
 
-class WeatherRepository (private val remote: ForecastApi, private val local: WeatherDao) {
-
+class WeatherRepository(private val remote: ForecastApi, private val local: WeatherDao) {
 
 
-    fun getCites(city: String):Single<List<City>> {
-        Log.d(REMOTE+0, city)
-             return remote.getCities(city)
-                .subscribeOn(Schedulers.newThread())
-                 .flatMap { list ->
-                     Observable.fromIterable(list).flatMap { cityResponse ->
-                        remote.getWeather(cityResponse.key, "true")
-                            .map{ weatherResponse ->
-                                weatherResponse.first().mapToLocal(cityResponse.key)
-                            }
-                            .toObservable()
-                            .doOnNext {
-                                Log.d(REMOTE+1, it.toString())
-                                local.addWeatherInCity(
-                                    cityResponse.mapToLocal(it.temperature), it)
-                            }.map {cityResponse.mapToLocal(it.temperature)}
-                    }.toList()
-                 }.onErrorResumeNext{
-                     Log.d(REMOTE+2, it.localizedMessage?:it.toString())
-                     local.getCities(city)
-                 }
-         }
+    companion object {
+        const val TAG = "WeatherRepository"
+    }
+
+
+    fun getCites(city: String): Single<List<City>> {
+        return remote.getCities(city)
+            .subscribeOn(Schedulers.newThread())
+            .flatMap { list ->
+                Observable.fromIterable(list).flatMap { cityResponse ->
+                    remote.getWeather(cityResponse.key, "true")
+                        .map { weatherResponse ->
+                            weatherResponse.first().mapToLocal(cityResponse.key)
+                        }
+                        .toObservable()
+                        .doOnNext {
+                            local.addWeatherInCity(cityResponse.mapToLocal(it.temperature), it)
+                        }.map {
+                            cityResponse.mapToLocal(it.temperature)
+                        }
+                }.toList()
+            }.onErrorResumeNext {
+                Log.d(TAG, it.message ?: it.toString())
+                local.getCities(city)
+            }
+    }
 
     fun getCityWeather(cityId: String): Single<CityWeather> {
         return local.getCityWeather(cityId)
     }
 
-    fun updateWeather(cityId: String):Single<Weather> {
+    fun updateWeather(cityId: String): Single<Weather> {
         return remote.getWeather(cityId, "true")
             .map {
                 it.first().mapToLocal(cityId)
             }
             .doOnSuccess { local.addWeather(it) }
-            .onErrorResumeNext {local.getWeather(cityId)}
+            .onErrorResumeNext {
+                Log.d(TAG, it.message ?: it.toString())
+                local.getWeather(cityId)
+            }
     }
 
 }

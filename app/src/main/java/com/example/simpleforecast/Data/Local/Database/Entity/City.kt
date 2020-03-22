@@ -13,11 +13,11 @@ data class City(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "area")
-    val area:String,
+    val area: String,
     @ColumnInfo(name = "areaType")
-    val areaType:String,
+    val areaType: String,
     @ColumnInfo(name = "city_temperature")
-    val temperature: Int?=null,
+    val temperature: Int? = null,
     @ColumnInfo(name = "country")
-    val country:String
-  )
+    val country: String
+)

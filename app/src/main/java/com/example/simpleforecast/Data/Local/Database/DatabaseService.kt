@@ -11,22 +11,23 @@ import com.example.simpleforecast.Data.Local.Database.Entity.Weather
 @Database(entities = [City::class, Weather::class], version = 1)
 abstract class DatabaseService : RoomDatabase() {
 
-    abstract fun weatherDao():WeatherDao
+    abstract fun weatherDao(): WeatherDao
 
 
     companion object {
         @Volatile
         private var INSTANCE: DatabaseService? = null
+
         fun getInstance(context: Context): DatabaseService =
             INSTANCE
-                ?: synchronized(DatabaseService::class.java){
-                INSTANCE
-                    ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    DatabaseService::class.java,
-                    "Weather.db"
-                ).build()
-                    .also { INSTANCE = it }
-            }
+                ?: synchronized(DatabaseService::class.java) {
+                    INSTANCE
+                        ?: Room.databaseBuilder(
+                            context.applicationContext,
+                            DatabaseService::class.java,
+                            "Weather.db"
+                        ).build()
+                            .also { INSTANCE = it }
+                }
     }
 }

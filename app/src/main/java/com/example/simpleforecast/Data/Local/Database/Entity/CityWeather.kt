@@ -4,8 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 
 
- class CityWeather(
-     @Embedded
-     val city:City,
-     @Embedded
-     val weather: Weather)
+class CityWeather(
+    @Embedded
+    val city: City,
+    @Embedded
+    val weather: Weather
+)

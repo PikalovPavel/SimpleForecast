@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey
 import com.example.simpleforecast.Data.Local.Database.Entity.City
 
 
-@Entity(tableName = "weathers",
-        foreignKeys = [ForeignKey(
+@Entity(
+    tableName = "weathers",
+    foreignKeys = [ForeignKey(
         entity = City::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("city_id"),
@@ -17,20 +18,21 @@ import com.example.simpleforecast.Data.Local.Database.Entity.City
 )
 data class Weather(
     @PrimaryKey(autoGenerate = true)
-    val weather_id:Int = 0,
+    val weather_id: Int = 0,
     @ColumnInfo(name = "temperature")
-    val temperature:Double? = null,
+    val temperature: Double? = null,
     @ColumnInfo(name = "temperature_feels")
-    val temperatureFeels:Double?=null,
+    val temperatureFeels: Double? = null,
     @ColumnInfo(name = "temperature_description")
-    val temperatureDescription:String,
+    val temperatureDescription: String,
     @ColumnInfo(name = "wind")
-    val wind:Int?=null,
+    val wind: Int? = null,
     @ColumnInfo(name = "wind_direction")
-    val windDirection:String,
+    val windDirection: String,
     @ColumnInfo(name = "pressure")
-    val pressure:Int?=null,
+    val pressure: Int? = null,
     @ColumnInfo(name = "icon")
-    val icon:Int,
+    val icon: Int,
     @ColumnInfo(name = "city_id")
-    val cityId:String)
+    val cityId: String
+)
